@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-zinc-900 antialiased;
+  }
+
+  ::selection {
+    @apply bg-zinc-900 text-white;
+  }
+}
