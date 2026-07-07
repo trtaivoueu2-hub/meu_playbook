@@ -1,0 +1,106 @@
+<svg width="680" height="780" viewBox="0 0 680 780" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: Arial, sans-serif; fill: #1a1a1a; }
+    .th { font-size: 14px; font-weight: 500; }
+    .ts { font-size: 12px; }
+  </style>
+
+  <text class="th" x="340" y="28" text-anchor="middle">Ciclo de estudos — 10h · AJAA (TRT-MG)</text>
+
+  <text class="ts" x="66" y="48" text-anchor="middle">0–1h</text>
+  <text class="ts" x="186" y="48" text-anchor="middle">1–2h</text>
+  <text class="ts" x="306" y="48" text-anchor="middle">2–3h</text>
+  <text class="ts" x="426" y="48" text-anchor="middle">3–4h</text>
+  <text class="ts" x="546" y="48" text-anchor="middle">4–5h30</text>
+
+  <rect x="16"  y="54" width="100" height="40" rx="4" fill="#EEEDFE" stroke="#AFA9EC" stroke-width="0.5"/>
+  <text font-size="10" x="66"  y="69" text-anchor="middle" dominant-baseline="central">L. Portuguesa</text>
+  <text font-size="10" x="66"  y="83" text-anchor="middle" dominant-baseline="central">(1h)</text>
+
+  <rect x="136" y="54" width="100" height="40" rx="4" fill="#E1F5EE" stroke="#5DCAA5" stroke-width="0.5"/>
+  <text font-size="10" x="186" y="69" text-anchor="middle" dominant-baseline="central">Informática</text>
+  <text font-size="10" x="186" y="83" text-anchor="middle" dominant-baseline="central">(1h)</text>
+
+  <rect x="256" y="54" width="100" height="40" rx="4" fill="#FAECE7" stroke="#F0997B" stroke-width="0.5"/>
+  <text font-size="10" x="306" y="69" text-anchor="middle" dominant-baseline="central">Orcam. Púb.</text>
+  <text font-size="10" x="306" y="83" text-anchor="middle" dominant-baseline="central">(1h)</text>
+
+  <rect x="376" y="54" width="100" height="40" rx="4" fill="#E6F1FB" stroke="#85B7EB" stroke-width="0.5"/>
+  <text font-size="10" x="426" y="69" text-anchor="middle" dominant-baseline="central">Adm. Púb.</text>
+  <text font-size="10" x="426" y="83" text-anchor="middle" dominant-baseline="central">(1h)</text>
+
+  <rect x="496" y="54" width="100" height="40" rx="4" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.5"/>
+  <text font-size="10" x="546" y="69" text-anchor="middle" dominant-baseline="central">Legislação</text>
+  <text font-size="10" x="546" y="83" text-anchor="middle" dominant-baseline="central">(1h30)</text>
+
+  <line x1="16" y1="104" x2="664" y2="104" stroke="#ccc" stroke-width="0.5" stroke-dasharray="4 4"/>
+
+  <text class="ts" x="66"  y="120" text-anchor="middle">5h30–6h30</text>
+  <text class="ts" x="186" y="120" text-anchor="middle">6h30–8h</text>
+  <text class="ts" x="306" y="120" text-anchor="middle">8h–9h</text>
+  <text class="ts" x="426" y="120" text-anchor="middle">9h–10h</text>
+
+  <rect x="16"  y="126" width="100" height="40" rx="4" fill="#FBEAF0" stroke="#ED93B1" stroke-width="0.5"/>
+  <text font-size="10" x="66"  y="141" text-anchor="middle" dominant-baseline="central">D. Constitucional</text>
+  <text font-size="10" x="66"  y="155" text-anchor="middle" dominant-baseline="central">(1h)</text>
+
+  <rect x="136" y="126" width="100" height="40" rx="4" fill="#EAF3DE" stroke="#97C459" stroke-width="0.5"/>
+  <text font-size="10" x="186" y="141" text-anchor="middle" dominant-baseline="central">D. Administrativo</text>
+  <text font-size="10" x="186" y="155" text-anchor="middle" dominant-baseline="central">(1h30)</text>
+
+  <rect x="256" y="126" width="100" height="40" rx="4" fill="#E6F1FB" stroke="#85B7EB" stroke-width="0.5"/>
+  <text font-size="10" x="306" y="141" text-anchor="middle" dominant-baseline="central">Adm. Púb.</text>
+  <text font-size="10" x="306" y="155" text-anchor="middle" dominant-baseline="central">(1h)</text>
+
+  <rect x="376" y="126" width="100" height="40" rx="4" fill="#9FE1CB" stroke="#1D9E75" stroke-width="0.5"/>
+  <text font-size="10" x="426" y="141" text-anchor="middle" dominant-baseline="central">Gestão P.</text>
+  <text font-size="10" x="426" y="155" text-anchor="middle" dominant-baseline="central">(1h)</text>
+
+  <!-- CÍRCULO -->
+  <path d="M340,320 A110,110 0 0,1 410.7,345.7 L468.6,276.8 A200,200 0 0,0 340,230 Z" fill="#EEEDFE" stroke="white" stroke-width="1.5"/>
+  <path d="M410.7,345.7 A110,110 0 0,1 448.4,410.9 L537.0,395.3 A200,200 0 0,0 468.6,276.8 Z" fill="#E1F5EE" stroke="white" stroke-width="1.5"/>
+  <path d="M448.4,410.9 A110,110 0 0,1 435.3,485.0 L513.2,530.0 A200,200 0 0,0 537.0,395.3 Z" fill="#FAECE7" stroke="white" stroke-width="1.5"/>
+  <path d="M435.3,485.0 A110,110 0 0,1 377.6,533.3 L408.4,617.9 A200,200 0 0,0 513.2,530.0 Z" fill="#E6F1FB" stroke="white" stroke-width="1.5"/>
+  <path d="M377.6,533.3 A110,110 0 0,1 302.4,533.3 L271.6,617.9 A200,200 0 0,0 408.4,617.9 Z" fill="#FAEEDA" stroke="white" stroke-width="1.5"/>
+  <path d="M302.4,533.3 A110,110 0 0,1 244.7,485.0 L166.8,530.0 A200,200 0 0,0 271.6,617.9 Z" fill="#FBEAF0" stroke="white" stroke-width="1.5"/>
+  <path d="M244.7,485.0 A110,110 0 0,1 231.6,410.9 L143.0,395.3 A200,200 0 0,0 166.8,530.0 Z" fill="#EAF3DE" stroke="white" stroke-width="1.5"/>
+  <path d="M231.6,410.9 A110,110 0 0,1 269.3,345.7 L211.4,276.8 A200,200 0 0,0 143.0,395.3 Z" fill="#E6F1FB" stroke="white" stroke-width="1.5"/>
+  <path d="M269.3,345.7 A110,110 0 0,1 340,320 L340,230 A200,200 0 0,0 211.4,276.8 Z" fill="#9FE1CB" stroke="white" stroke-width="1.5"/>
+
+  <circle cx="340" cy="430" r="200" fill="none" stroke="#555" stroke-width="1.2" opacity="0.4"/>
+  <circle cx="340" cy="430" r="110" fill="none" stroke="#555" stroke-width="1.2" opacity="0.4"/>
+
+  <line x1="340" y1="320" x2="340" y2="230" stroke="#555" stroke-width="0.8" opacity="0.35"/>
+  <line x1="410.7" y1="345.7" x2="468.6" y2="276.8" stroke="#555" stroke-width="0.8" opacity="0.35"/>
+  <line x1="448.4" y1="410.9" x2="537.0" y2="395.3" stroke="#555" stroke-width="0.8" opacity="0.35"/>
+  <line x1="435.3" y1="485.0" x2="513.2" y2="530.0" stroke="#555" stroke-width="0.8" opacity="0.35"/>
+  <line x1="377.6" y1="533.3" x2="408.4" y2="617.9" stroke="#555" stroke-width="0.8" opacity="0.35"/>
+  <line x1="302.4" y1="533.3" x2="271.6" y2="617.9" stroke="#555" stroke-width="0.8" opacity="0.35"/>
+  <line x1="244.7" y1="485.0" x2="166.8" y2="530.0" stroke="#555" stroke-width="0.8" opacity="0.35"/>
+  <line x1="231.6" y1="410.9" x2="143.0" y2="395.3" stroke="#555" stroke-width="0.8" opacity="0.35"/>
+  <line x1="269.3" y1="345.7" x2="211.4" y2="276.8" stroke="#555" stroke-width="0.8" opacity="0.35"/>
+
+  <text font-size="12" x="394" y="275" text-anchor="middle" dominant-baseline="central">L. Portuguesa</text>
+  <text font-size="12" x="394" y="289" text-anchor="middle" dominant-baseline="central">(1h)</text>
+  <text font-size="12" x="477" y="345" text-anchor="middle" dominant-baseline="central">Informática</text>
+  <text font-size="12" x="477" y="359" text-anchor="middle" dominant-baseline="central">(1h)</text>
+  <text font-size="12" x="492" y="451" text-anchor="middle" dominant-baseline="central">Orcam. Púb.</text>
+  <text font-size="12" x="492" y="465" text-anchor="middle" dominant-baseline="central">(1h)</text>
+  <text font-size="12" x="440" y="545" text-anchor="middle" dominant-baseline="central">Adm. Púb.</text>
+  <text font-size="12" x="440" y="559" text-anchor="middle" dominant-baseline="central">(1h)</text>
+  <text font-size="12" x="340" y="582" text-anchor="middle" dominant-baseline="central">Legislação</text>
+  <text font-size="12" x="340" y="596" text-anchor="middle" dominant-baseline="central">(1h30)</text>
+  <text font-size="10" x="238" y="545" text-anchor="middle" dominant-baseline="central">D. Constitucional</text>
+  <text font-size="10" x="238" y="557" text-anchor="middle" dominant-baseline="central">(1h)</text>
+  <text font-size="10" x="184" y="451" text-anchor="middle" dominant-baseline="central">D. Administrativo</text>
+  <text font-size="10" x="184" y="463" text-anchor="middle" dominant-baseline="central">(1h30)</text>
+  <text font-size="12" x="203" y="345" text-anchor="middle" dominant-baseline="central">Adm. Púb.</text>
+  <text font-size="12" x="203" y="359" text-anchor="middle" dominant-baseline="central">(1h)</text>
+  <text font-size="12" x="286" y="275" text-anchor="middle" dominant-baseline="central">Gestão P.</text>
+  <text font-size="12" x="286" y="289" text-anchor="middle" dominant-baseline="central">(1h)</text>
+
+  <circle cx="340" cy="430" r="109" fill="white"/>
+  <text font-size="12" x="340" y="416" text-anchor="middle" dominant-baseline="central">Ciclo 10h</text>
+  <text font-size="12" x="340" y="431" text-anchor="middle" dominant-baseline="central">AJAA</text>
+  <text font-size="12" x="340" y="446" text-anchor="middle" dominant-baseline="central">(TRT-MG)</text>
+</svg>
