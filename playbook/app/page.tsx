@@ -167,7 +167,8 @@ export default function PlaybookMariana() {
               <strong className="text-[#dde4ef]">entre dois e três anos</strong>. Os tribunais do sudeste estão, em sua maioria, com concursos vigentes realizados há pouco tempo — vejo isso como uma oportunidade de preparação sólida e tranquila.
             </p>
             <p className="mt-4 text-[15px] leading-relaxed text-[#b0bfcf]">
-              Sua principal vantagem é ser jovem, não possuir filhos e ter horário flexível de trabalho, com períodos de <em className="text-[#dde4ef] not-italic font-semibold">ociosidade que podem ser aproveitados</em> para videoaulas, exercícios e revisões.
+              Sua principal vantagem é ser jovem, não possuir filhos e ter horário flexível de trabalho, com períodos de{" "}
+              <em className="not-italic font-semibold text-[#dde4ef]">ociosidade que podem ser aproveitados</em> para videoaulas, exercícios e revisões.
             </p>
           </blockquote>
         </section>
@@ -205,7 +206,6 @@ export default function PlaybookMariana() {
         <section className="mb-10">
           <SectionHeader index="04" title="Iniciando sua Sessão de Estudo" />
           <div className="rounded-xl border border-[#1e2a38] bg-[#141b25] p-6">
-            {/* barra de progresso */}
             <div className="mb-6 flex items-center gap-3">
               <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#1e2a38]">
                 <div
@@ -225,7 +225,6 @@ export default function PlaybookMariana() {
                     onClick={() => toggle(i)}
                     className="flex w-full items-start gap-4 rounded-lg p-3 text-left transition hover:bg-[#1a2333]"
                   >
-                    {/* checkbox */}
                     <span
                       className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition ${
                         checked[i]
@@ -252,7 +251,6 @@ export default function PlaybookMariana() {
         {/* ── 5. DICA DE OURO ── */}
         <section className="mb-10">
           <div className="relative overflow-hidden rounded-xl border border-[#f5c542]/30 bg-[#1a1506] p-7">
-            {/* glow decorativo */}
             <div
               className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full opacity-20"
               style={{ background: "radial-gradient(circle, #f5c542 0%, transparent 70%)" }}
@@ -301,7 +299,6 @@ export default function PlaybookMariana() {
           <div className="space-y-4">
             {MATERIAIS.map((mat) => (
               <div key={`${mat.subject}-${mat.professor}`} className="rounded-xl border border-[#1e2a38] bg-[#141b25] p-6">
-                {/* cabeçalho */}
                 <div className="mb-3 flex flex-wrap items-start gap-2">
                   <span className="rounded-full border border-[#00e896]/30 bg-[#00e896]/10 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-[#00e896]">
                     {mat.subject}
@@ -319,7 +316,6 @@ export default function PlaybookMariana() {
                   </p>
                 )}
 
-                {/* links */}
                 <div className="flex flex-wrap gap-2">
                   {mat.site && (
                     <LinkButton href={mat.site.href} label={mat.site.label} variant="site" />
@@ -341,7 +337,7 @@ export default function PlaybookMariana() {
           <p className="mb-2 text-2xl font-black text-[#dde4ef]">
             Boa sorte e Bons estudos!
           </p>
-          <p className="text-base text-[#00e896] font-semibold">
+          <p className="text-base font-semibold text-[#00e896]">
             E lembre-se de que você já passou em um concurso.
           </p>
           <p className="mt-6 text-xs text-[#3d5266]">
