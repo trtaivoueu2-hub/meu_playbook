@@ -1,304 +1,405 @@
-import ProgressHeader from "@/components/ProgressHeader";
-import Step from "@/components/Step";
-import Quote from "@/components/Quote";
-import BeforeAfter from "@/components/BeforeAfter";
-import SectionLabel from "@/components/SectionLabel";
-import Callout from "@/components/Callout";
-import ScrollIndicator from "@/components/ScrollIndicator";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+
+/* ─── tipos ─────────────────────────────────────────── */
+interface LinkItem {
+  label: string;
+  href: string;
+}
+
+interface MaterialCard {
+  subject: string;
+  professor: string;
+  description: string;
+  site?: LinkItem;
+  book?: string;
+  platforms?: LinkItem[];
+  lessons?: LinkItem[];
+}
+
+/* ─── dados ──────────────────────────────────────────── */
+const CHECKLIST = [
+  "Separe o material e ligue o cronômetro regressivo de 1 hora.",
+  "Ao terminar, anote o tempo no Google Agenda, Trello ou Notion — ex: Direito Constitucional (DC) · 1h.",
+  "Se o tópico terminar logo, use o cronômetro extra e some ao total — ex: 1h05.",
+  "Entre matérias diferentes, pause de 10 a 15 min sem celular nem redes sociais.",
+  "No fim do dia, some tudo — ex: DC 1h05 + DA 1h15 = 2h20.",
+  "Sessão ultrapassando 1h30? Pausa obrigatória de 10 min após a primeira hora.",
+  "Começou com apenas 40 min de foco? Anote, pause e compense o restante depois.",
+];
+
+const DICAS = [
+  {
+    title: "Tempo de Sessão",
+    body: "Não force duas horas seguidas sem pausa. 30 minutos de qualidade total valem mais do que se esgotar rápido.",
+  },
+  {
+    title: "Estratégia de Prova",
+    body: "Comece pelas matérias que domina para ganhar confiança. Travou em uma questão? Elimine o nitidamente errado e siga em frente — volte nelas no final.",
+  },
+  {
+    title: "Armadilhas nas Alternativas",
+    body: "Desconfie de termos absolutos como \"todo\" e \"nenhum\". Se várias parecerem certas, busque a \"menos errada\". Cuidado com alternativas que firam direitos humanos.",
+  },
+];
+
+const MATERIAIS: MaterialCard[] = [
+  {
+    subject: "Gramática",
+    professor: "Fernando Pestana",
+    description:
+      "Estilo divertido e focado em bancas. Referência para superar dificuldades com a língua portuguesa no contexto de concursos.",
+    book: "A Gramática para Concursos Públicos",
+    site: { label: "portuguescompestana.com.br", href: "https://www.portuguescompestana.com.br/" },
+  },
+  {
+    subject: "Raciocínio Lógico",
+    professor: "Thiago Pacífico",
+    description:
+      "Curso básico ideal para quem tem traumas com matemática. Aulas progressivas e linguagem acessível.",
+    site: { label: "concurseiroprime.com.br", href: "https://concurseiroprime.com.br/" },
+    lessons: [
+      { label: "Aula 1", href: "https://www.youtube.com/watch?v=J_ZTkMS01KE" },
+      { label: "Aula 2", href: "https://www.youtube.com/watch?v=HRmPxTfy7rg" },
+      { label: "Aula 3", href: "https://www.youtube.com/watch?v=13EY3d_CHPc" },
+      { label: "Aula 4", href: "https://www.youtube.com/watch?v=N7L_QiCyfQc" },
+    ],
+  },
+  {
+    subject: "Raciocínio Lógico",
+    professor: "Brunno Lima",
+    description:
+      "Professor do Estratégia Concursos. Excelente para consolidar a base e avançar com segurança.",
+    lessons: [
+      { label: "Aula 1", href: "https://www.youtube.com/watch?v=4Dt7XshAaFE&list=PLpPxvH-OGrW_NBmT2WlQfTa6pNC5HTkUE" },
+      { label: "Aula 2", href: "https://www.youtube.com/watch?v=5C-qDiqPjMM&list=PLpPxvH-OGrW_NBmT2WlQfTa6pNC5HTkUE&index=6" },
+    ],
+  },
+  {
+    subject: "Direito Administrativo",
+    professor: "Rodrigo Motta",
+    description:
+      "Estilo dinâmico, didático e eficiente. Disponível em plataformas pagas e no YouTube.",
+    platforms: [
+      { label: "Projeto Imersão (PRA)", href: "https://praconcursosonline.com/curso/projeto-imersao-em-direito-administrativo-professor-rodrigo-motta/" },
+      { label: "Polícia Federal (Grupo EMZO)", href: "https://grupoemzo.com.br/curso/direito-administrativo-para-policia-federal-prof:-rodrigo-motta/1161" },
+    ],
+    lessons: [
+      { label: "Aula 1 — YouTube", href: "https://www.youtube.com/watch?v=fpMtz8xh3bo" },
+      { label: "Aula 2 — YouTube", href: "https://www.youtube.com/watch?v=hQd1Yks3VZ0" },
+    ],
+  },
+];
+
+/* ─── componente principal ───────────────────────────── */
+export default function PlaybookMariana() {
+  const [checked, setChecked] = useState<boolean[]>(Array(CHECKLIST.length).fill(false));
+
+  const toggle = (i: number) =>
+    setChecked((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
+
+  const done = checked.filter(Boolean).length;
+
   return (
-    <>
-      <ProgressHeader />
+    <div className="min-h-screen bg-[#0c1118] text-[#dde4ef]" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
-      {/* ── HERO (fullscreen) ── */}
-      <section className="relative flex min-h-screen flex-col items-center justify-center bg-white px-6 text-center">
-        {/* top label */}
-        <p className="mb-8 text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300">
-          Playbook Premium · Edição 01 · 2025
-        </p>
-
-        {/* title */}
-        <h1 className="mb-6 max-w-2xl text-[clamp(3.5rem,12vw,7rem)] font-black uppercase leading-[0.92] tracking-[-0.04em] text-zinc-900">
-          O Método<br />
-          <span className="text-zinc-300">Foco.</span>
-        </h1>
-
-        {/* separator */}
-        <div className="my-6 flex items-center gap-4">
-          <div className="h-px w-16 bg-zinc-200" />
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-400">
-            <strong className="text-zinc-600">Sistematização</strong> é a única saída.
-          </p>
-          <div className="h-px w-16 bg-zinc-200" />
+      {/* ── TOPO ── */}
+      <header className="border-b border-[#1e2a38] px-6 py-4">
+        <div className="mx-auto flex max-w-2xl items-center justify-between">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#667b96]">
+            Mentoria de Concursos
+          </span>
+          <span className="rounded-full border border-[#00e896]/30 bg-[#00e896]/10 px-3 py-1 text-xs font-semibold text-[#00e896]">
+            Sessão · 26/06/2026
+          </span>
         </div>
+      </header>
 
-        {/* meta */}
-        <p className="max-w-sm text-sm leading-relaxed text-zinc-400">
-          Como transformar qualquer objetivo de longo prazo em um sistema diário
-          que você realmente segue — sem motivação, sem força de vontade.
-        </p>
+      <main className="mx-auto max-w-2xl px-6 pb-24 pt-12">
 
-        {/* author */}
-        <div className="mt-10 flex items-center gap-3">
-          <div className="h-8 w-8 rounded-full bg-zinc-900" />
-          <div className="text-left">
-            <p className="text-xs font-bold text-zinc-700">Rafael Duarte</p>
-            <p className="text-[10px] uppercase tracking-widest text-zinc-400">12 min de leitura</p>
-          </div>
-        </div>
-
-        <ScrollIndicator />
-      </section>
-
-      {/* ── CONTENT ── */}
-      <main className="mx-auto w-full max-w-2xl px-6 pb-40 pt-24 font-[family-name:var(--font-inter)]">
-
-        {/* ── CAPÍTULO 1 ── */}
-        <section id="capitulo-1" className="mb-28 scroll-mt-28">
-          <SectionLabel chapter="01" title="O Problema" accent="text-blue-500" />
-
-          <h2 className="mb-8 text-[clamp(2.4rem,6vw,3.5rem)] font-black uppercase leading-[0.95] tracking-tight text-zinc-900">
-            Você não tem<br />problema de foco.<br />
-            <span className="text-zinc-300">Tem problema<br />de sistema.</span>
-          </h2>
-
-          <p className="mb-5 text-base leading-relaxed text-zinc-500">
-            A maioria das pessoas acredita que precisa de mais motivação. Que se apenas
-            se sentissem mais animadas, conseguiriam estudar, treinar ou trabalhar com
-            consistência. Isso é um <strong className="text-zinc-900">erro de diagnóstico</strong>.
+        {/* ── HERO ── */}
+        <section className="mb-16">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-[#667b96]">
+            Playbook Oficial
           </p>
-          <p className="mb-5 text-base leading-relaxed text-zinc-500">
-            Motivação é um sentimento. Sentimentos são voláteis. Um sistema é uma
-            estrutura. Estruturas são estáveis. O que distingue quem entrega resultados
-            consistentes de quem não entrega não é talento nem disposição — é
-            arquitetura.
+          <h1
+            className="mb-4 text-5xl font-black leading-[0.95] tracking-tight text-[#dde4ef] sm:text-6xl"
+            style={{ textWrap: "balance" } as React.CSSProperties}
+          >
+            Mariana<br />
+            <span className="text-[#00e896]">Santos.</span>
+          </h1>
+          <p className="max-w-sm text-[#667b96]">
+            Seu guia personalizado de preparação para concursos públicos — organizado, prático e feito para a sua rotina.
           </p>
-
-          <Quote
-            text="Você não sobe ao nível das suas metas. Você cai ao nível dos seus sistemas."
-            author="James Clear"
-            role="Autor de Hábitos Atômicos"
-          />
-
-          <p className="mb-10 text-base leading-relaxed text-zinc-500">
-            Este playbook existe para ajudá-lo a construir essa arquitetura. Não é um
-            conjunto de dicas. É uma metodologia — testada, sequenciada e aplicável
-            esta semana.
-          </p>
-
-          <BeforeAfter
-            before={{
-              label: "Antes do método",
-              items: [
-                "Estuda quando se sente motivado",
-                "Sessões longas e sem estrutura",
-                "Revisa o mesmo conteúdo sem critério",
-                "Desiste após 2 semanas de inconsistência",
-              ],
-            }}
-            after={{
-              label: "Com o método",
-              items: [
-                "Estuda no horário fixo, independente do humor",
-                "Sessões curtas com objetivo claro",
-                "Revisão espaçada automática por prioridade",
-                "Consistência de 90 dias sem esforço extra",
-              ],
-            }}
-          />
         </section>
 
-        {/* ── CAPÍTULO 2 ── */}
-        <section id="capitulo-2" className="mb-28 scroll-mt-28">
-          <SectionLabel chapter="02" title="Os Três Pilares" accent="text-amber-500" />
-
-          <h2 className="mb-4 text-[clamp(2.4rem,6vw,3.5rem)] font-black uppercase leading-[0.95] tracking-tight text-zinc-900">
-            A estrutura por trás<br />
-            <span className="text-zinc-300">de cada<br />alta performance.</span>
-          </h2>
-
-          <p className="mb-12 text-base leading-relaxed text-zinc-500">
-            Todo método sustentável se apoia em três fundações. Falta qualquer uma e
-            o sistema desmorona. Veja como aplicar cada pilar na prática.
-          </p>
-
-          <Step number={1} title="Sistematização: metas viram tarefas">
-            <p>
-              Uma meta como "aprender inglês" não produz ação. Uma tarefa como
-              "ouvir 20 minutos de podcast em inglês às 7h" produz. O primeiro
-              passo do método é transformar cada objetivo em tarefas mensuráveis
-              com tempo e contexto definidos.
-            </p>
-            <p>
-              Use o critério <strong className="text-zinc-900">2 minutos ou agende</strong>:
-              se a tarefa leva menos de 2 minutos, faça agora. Se não, coloque em um
-              horário fixo. Nunca deixe no "vou fazer quando der".
-            </p>
-          </Step>
-
-          <Step number={2} title="Foco: sessões curtas com intenção total">
-            <p>
-              Sessões de 90 minutos sem pausa não são produtivas — são teatro de
-              produtividade. O cérebro humano sustenta atenção profunda em blocos de
-              25–52 minutos. Depois disso, a qualidade cai mesmo que você continue sentado.
-            </p>
-            <p>
-              O Método Foco usa blocos de <strong className="text-zinc-900">45 minutos</strong>{" "}
-              com 10 minutos de recuperação ativa. Três blocos bem feitos superam seis
-              horas mal feitas.
-            </p>
-          </Step>
-
-          <Step number={3} title="Memória: revisão espaçada, não releitura">
-            <p>
-              Reler o mesmo material é reconfortante, mas ineficaz. O cérebro retém o
-              que testa. A revisão espaçada — revisar um conteúdo 1 dia, 7 dias e 30
-              dias após o primeiro contato — aumenta a retenção em até 80%.
-            </p>
-            <p>
-              Ao terminar cada sessão, agende automaticamente três revisões futuras.
-              Esse passo de 2 minutos multiplica o valor de cada hora investida.
-            </p>
-          </Step>
-
-          <Callout type="key">
-            Sistematização garante que você <strong>começa</strong>. Foco garante que
-            você <strong>entrega</strong>. Memória garante que você <strong>retém</strong>.
-            Os três pilares são interdependentes — implemente em ordem.
-          </Callout>
-        </section>
-
-        {/* ── CAPÍTULO 3 ── */}
-        <section id="capitulo-3" className="mb-28 scroll-mt-28">
-          <SectionLabel chapter="03" title="A Semana Modelo" accent="text-emerald-600" />
-
-          <h2 className="mb-8 text-[clamp(2.4rem,6vw,3.5rem)] font-black uppercase leading-[0.95] tracking-tight text-zinc-900">
-            Como montar<br />
-            <span className="text-zinc-300">sua primeira<br />semana.</span>
-          </h2>
-
-          <p className="mb-10 text-base leading-relaxed text-zinc-500">
-            Teoria sem execução é ficção científica. Aqui está o modelo de semana que
-            recomendamos para quem está iniciando o método. Adapte os horários, mas
-            não a estrutura.
-          </p>
-
-          <div className="mb-10 overflow-hidden rounded-xl border border-zinc-200">
+        {/* ── 1. PERFIL ── */}
+        <section className="mb-10">
+          <SectionHeader index="01" title="Seu Perfil de Estudante" />
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {[
-              { day: "Segunda", blocks: "2 blocos", note: "Revisão do material da semana anterior" },
-              { day: "Terça", blocks: "3 blocos", note: "Conteúdo novo — tema principal" },
-              { day: "Quarta", blocks: "2 blocos", note: "Exercícios práticos / questões" },
-              { day: "Quinta", blocks: "3 blocos", note: "Conteúdo novo — tema secundário" },
-              { day: "Sexta", blocks: "2 blocos", note: "Revisão espaçada das revisões agendadas" },
-              { day: "Sábado", blocks: "1 bloco", note: "Organização, revisão leve, planejamento" },
-              { day: "Domingo", blocks: "—", note: "Recuperação cognitiva. Sem tela de estudo." },
-            ].map((row, i, arr) => (
-              <div
-                key={i}
-                className={`flex items-center justify-between gap-4 px-5 py-4 text-sm ${
-                  i < arr.length - 1 ? "border-b border-zinc-100" : ""
-                } ${row.day === "Domingo" ? "bg-zinc-50" : "bg-white"}`}
-              >
-                <span className="w-20 shrink-0 font-bold text-zinc-900">{row.day}</span>
-                <span className={`w-20 shrink-0 font-semibold tabular-nums ${row.day === "Domingo" ? "text-zinc-300" : "text-zinc-900"}`}>
-                  {row.blocks}
-                </span>
-                <span className="text-right text-zinc-400">{row.note}</span>
+              { label: "Formação", value: "Produção Cultural · UFF" },
+              { label: "Redação ENEM", value: "920 pontos" },
+              { label: "Ponto forte", value: "Interpretação de textos" },
+              { label: "A desenvolver", value: "Gramática" },
+              { label: "Aprendizado", value: "Absorve informações rapidamente" },
+              { label: "Rotina", value: "Trabalho por demanda, horário flexível" },
+            ].map(({ label, value }) => (
+              <div key={label} className="rounded-xl border border-[#1e2a38] bg-[#141b25] p-4">
+                <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-[#667b96]">{label}</p>
+                <p className="font-semibold text-[#dde4ef]">{value}</p>
               </div>
             ))}
           </div>
-
-          <Callout type="tip">
-            Comece com apenas <strong>2 blocos de foco por dia</strong> na primeira semana.
-            14 blocos de 45 minutos bem-feitos equivalem a mais de 10 horas de estudo de
-            alta qualidade — provavelmente mais do que você faz hoje.
-          </Callout>
-
-          <Quote
-            text="A consistência de 1% ao dia resulta em 37× melhora em um ano. A inconsistência de 1% ao dia resulta em quase zero."
-            author="James Clear"
-          />
         </section>
 
-        {/* ── CAPÍTULO 4 ── */}
-        <section id="capitulo-4" className="mb-28 scroll-mt-28">
-          <SectionLabel chapter="04" title="Armadilhas Comuns" accent="text-rose-500" />
+        {/* ── 2. MENSAGEM MOTIVACIONAL ── */}
+        <section className="mb-10">
+          <SectionHeader index="02" title="Percepção da Mentoria" />
+          <blockquote className="border-l-2 border-[#00e896] py-1 pl-6">
+            <p className="text-[15px] leading-relaxed text-[#b0bfcf]">
+              Mariana, você tem boas chances de ser aprovada em um concurso. Só o fato de não só ser aprovada na UFF mas também conseguir concluir o curso em uma Universidade Federal mostra que você sabe como estudar e possui resiliência para aguentar o processo.
+            </p>
+            <p className="mt-4 text-[15px] leading-relaxed text-[#b0bfcf]">
+              Com o material correto, o conhecimento de organização e técnicas de estudo, e, claro, paciência e persistência, você será servidora pública{" "}
+              <strong className="text-[#dde4ef]">entre dois e três anos</strong>. Os tribunais do sudeste estão, em sua maioria, com concursos vigentes realizados há pouco tempo — vejo isso como uma oportunidade de preparação sólida e tranquila.
+            </p>
+            <p className="mt-4 text-[15px] leading-relaxed text-[#b0bfcf]">
+              Sua principal vantagem é ser jovem, não possuir filhos e ter horário flexível de trabalho, com períodos de <em className="text-[#dde4ef] not-italic font-semibold">ociosidade que podem ser aproveitados</em> para videoaulas, exercícios e revisões.
+            </p>
+          </blockquote>
+        </section>
 
-          <h2 className="mb-8 text-[clamp(2.4rem,6vw,3.5rem)] font-black uppercase leading-[0.95] tracking-tight text-zinc-900">
-            O que vai te<br />fazer desistir —<br />
-            <span className="text-zinc-300">e como evitar.</span>
-          </h2>
+        {/* ── 3. CICLO DE ESTUDOS ── */}
+        <section className="mb-10">
+          <SectionHeader index="03" title="O Ciclo de Estudos" />
+          <div className="rounded-xl border border-[#1e2a38] bg-[#141b25] p-6">
+            <p className="mb-6 text-[15px] leading-relaxed text-[#b0bfcf]">
+              O ciclo organiza as disciplinas em uma sequência pré-definida para que você não estude só o que gosta. Por não seguir um calendário semanal fixo, ele lida melhor com os imprevistos do dia a dia. Editais de Tribunais, Defensorias e Ministérios Públicos costumam ter muitas matérias em comum.
+            </p>
+            <p className="mb-6 text-sm text-[#667b96]">
+              Ciclos montados com base nos cursos do Estratégia Concursos para{" "}
+              <strong className="text-[#b0bfcf]">Analista Judiciário — Área Administrativa (AJAA)</strong> e{" "}
+              <strong className="text-[#b0bfcf]">Técnico Judiciário — Área Administrativa (TJAA)</strong>.{" "}
+              <span className="text-[#00e896]">Sugestão: inicie pelo ciclo TJAA nos próximos 3 meses</span> — é mais curto e aproveitável para seu momento atual.
+            </p>
 
-          <p className="mb-10 text-base leading-relaxed text-zinc-500">
-            Depois de acompanhar centenas de pessoas implementando o método, identificamos
-            os padrões de falha mais comuns. Conheça cada um antes de começar.
-          </p>
+            <div className="space-y-4">
+              <div>
+                <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#667b96]">Ciclo AJAA</p>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/ciclo_ajaa_trtmg.svg" alt="Ciclo de Estudos AJAA" className="my-2 mx-auto max-w-full rounded-lg" />
+              </div>
+              <div>
+                <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#00e896]">Ciclo TJAA — Recomendado para iniciar</p>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/ciclo_tjaa_trtmg.svg" alt="Ciclo de Estudos TJAA" className="my-2 mx-auto max-w-full rounded-lg" />
+              </div>
+            </div>
+          </div>
+        </section>
 
-          <BeforeAfter
-            before={{
-              label: "Armadilha",
-              items: [
-                "Tentar fazer tudo no primeiro dia",
-                "Trocar a estrutura toda semana",
-                "Estudar sem definir o objetivo da sessão",
-                "Contar horas em vez de blocos entregues",
-              ],
-            }}
-            after={{
-              label: "Solução",
-              items: [
-                "Implementar um pilar por semana",
-                "Ajustar apenas uma variável de cada vez",
-                "Escrever a intenção antes de começar",
-                "Medir blocos completos, não tempo total",
-              ],
-            }}
-          />
+        {/* ── 4. SESSÃO DE ESTUDO (checklist) ── */}
+        <section className="mb-10">
+          <SectionHeader index="04" title="Iniciando sua Sessão de Estudo" />
+          <div className="rounded-xl border border-[#1e2a38] bg-[#141b25] p-6">
+            {/* barra de progresso */}
+            <div className="mb-6 flex items-center gap-3">
+              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#1e2a38]">
+                <div
+                  className="h-full rounded-full bg-[#00e896] transition-all duration-500"
+                  style={{ width: `${(done / CHECKLIST.length) * 100}%` }}
+                />
+              </div>
+              <span className="shrink-0 text-xs font-bold tabular-nums text-[#667b96]">
+                {done}/{CHECKLIST.length}
+              </span>
+            </div>
 
-          <Callout type="warning">
-            O maior inimigo do método não é a preguiça. É o perfeccionismo.
-            Iniciar com 80% do plano hoje é infinitamente melhor do que aguardar
-            o plano perfeito que nunca chega.
-          </Callout>
+            <ul className="space-y-3">
+              {CHECKLIST.map((item, i) => (
+                <li key={i}>
+                  <button
+                    onClick={() => toggle(i)}
+                    className="flex w-full items-start gap-4 rounded-lg p-3 text-left transition hover:bg-[#1a2333]"
+                  >
+                    {/* checkbox */}
+                    <span
+                      className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border transition ${
+                        checked[i]
+                          ? "border-[#00e896] bg-[#00e896]/20 text-[#00e896]"
+                          : "border-[#2e3d52] bg-transparent"
+                      }`}
+                    >
+                      {checked[i] && (
+                        <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+                          <path d="M1 4.5L4 7.5L10 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </span>
+                    <span className={`text-sm leading-relaxed transition ${checked[i] ? "text-[#3d5266] line-through" : "text-[#b0bfcf]"}`}>
+                      {item}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* ── 5. DICA DE OURO ── */}
+        <section className="mb-10">
+          <div className="relative overflow-hidden rounded-xl border border-[#f5c542]/30 bg-[#1a1506] p-7">
+            {/* glow decorativo */}
+            <div
+              className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full opacity-20"
+              style={{ background: "radial-gradient(circle, #f5c542 0%, transparent 70%)" }}
+            />
+            <div className="relative">
+              <div className="mb-4 flex items-center gap-2.5">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#f5c542]/20 text-[#f5c542]">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a7 7 0 0 1 7 7c0 2.97-1.84 5.5-4.46 6.57L14 22H10l-.54-6.43C6.84 14.5 5 11.97 5 9a7 7 0 0 1 7-7z"/>
+                  </svg>
+                </span>
+                <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#f5c542]">
+                  Dica de Ouro
+                </span>
+              </div>
+              <h3 className="mb-3 text-lg font-black text-[#f5e9a0]">
+                O Combinado dos Cinco Minutos
+              </h3>
+              <p className="text-[15px] leading-relaxed text-[#c8b96a]">
+                Quando chegar exausta do trabalho, combine consigo mesma:{" "}
+                <em className="not-italic font-semibold text-[#f5e9a0]">"Vou sentar, abrir o livro, ligar o cronômetro e estudar apenas CINCO MINUTOS."</em>
+              </p>
+              <p className="mt-3 text-sm text-[#a08d4a]">
+                É uma estratégia para quebrar a resistência inicial e a inércia do cérebro diante de tarefas complexas. O cérebro engata no fluxo — e você acabará estudando bem mais do que cinco minutos.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 6. DICAS FINAIS ── */}
+        <section className="mb-10">
+          <SectionHeader index="05" title="Ritmo e Estratégia de Prova" />
+          <div className="space-y-3">
+            {DICAS.map(({ title, body }) => (
+              <div key={title} className="rounded-xl border border-[#1e2a38] bg-[#141b25] p-5">
+                <h3 className="mb-2 font-bold text-[#dde4ef]">{title}</h3>
+                <p className="text-sm leading-relaxed text-[#8a95a8]">{body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 7. MATERIAIS EXTRA ── */}
+        <section className="mb-16">
+          <SectionHeader index="06" title="Materiais Indicados" />
+          <div className="space-y-4">
+            {MATERIAIS.map((mat) => (
+              <div key={`${mat.subject}-${mat.professor}`} className="rounded-xl border border-[#1e2a38] bg-[#141b25] p-6">
+                {/* cabeçalho */}
+                <div className="mb-3 flex flex-wrap items-start gap-2">
+                  <span className="rounded-full border border-[#00e896]/30 bg-[#00e896]/10 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-[#00e896]">
+                    {mat.subject}
+                  </span>
+                  <span className="rounded-full border border-[#1e2a38] bg-[#0c1118] px-2.5 py-0.5 text-[11px] font-semibold text-[#667b96]">
+                    Prof. {mat.professor}
+                  </span>
+                </div>
+
+                <p className="mb-4 text-sm leading-relaxed text-[#8a95a8]">{mat.description}</p>
+
+                {mat.book && (
+                  <p className="mb-3 text-xs text-[#667b96]">
+                    <span className="font-semibold text-[#b0bfcf]">Livro:</span> {mat.book}
+                  </p>
+                )}
+
+                {/* links */}
+                <div className="flex flex-wrap gap-2">
+                  {mat.site && (
+                    <LinkButton href={mat.site.href} label={mat.site.label} variant="site" />
+                  )}
+                  {mat.platforms?.map((p) => (
+                    <LinkButton key={p.href} href={p.href} label={p.label} variant="platform" />
+                  ))}
+                  {mat.lessons?.map((l) => (
+                    <LinkButton key={l.href} href={l.href} label={l.label} variant="lesson" />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* ── ENCERRAMENTO ── */}
-        <section id="encerramento" className="scroll-mt-28 border-t border-zinc-100 pt-20">
-          <p className="mb-4 text-[10px] font-black uppercase tracking-[0.25em] text-zinc-300">
-            Próximo passo
+        <footer className="border-t border-[#1e2a38] pt-12 text-center">
+          <p className="mb-2 text-2xl font-black text-[#dde4ef]">
+            Boa sorte e Bons estudos!
           </p>
-          <h2 className="mb-6 text-[clamp(2.4rem,6vw,3.5rem)] font-black uppercase leading-[0.95] tracking-tight text-zinc-900">
-            Você tem o mapa.<br />
-            <span className="text-zinc-300">Agora escolha<br />começar.</span>
-          </h2>
-          <p className="mb-10 max-w-md text-base leading-relaxed text-zinc-500">
-            Conhecimento sem execução é apenas entretenimento intelectual. Reserve
-            agora 30 minutos para montar seu plano da próxima semana usando os
-            três pilares deste playbook.
+          <p className="text-base text-[#00e896] font-semibold">
+            E lembre-se de que você já passou em um concurso.
           </p>
-
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#capitulo-2"
-              className="inline-flex h-12 items-center justify-center rounded-lg bg-zinc-900 px-7 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-zinc-700"
-            >
-              Reler os três pilares
-            </a>
-            <a
-              href="#capitulo-3"
-              className="inline-flex h-12 items-center justify-center rounded-lg border border-zinc-200 px-7 text-sm font-bold uppercase tracking-wide text-zinc-700 transition hover:bg-zinc-50"
-            >
-              Ver a semana modelo
-            </a>
-          </div>
-
-          <p className="mt-20 text-xs text-zinc-300">
-            © 2025 O Método Foco · Todos os direitos reservados.
+          <p className="mt-6 text-xs text-[#3d5266]">
+            Playbook gerado em 26/06/2026 · Mentoria de Concursos
           </p>
-        </section>
+        </footer>
 
       </main>
-    </>
+    </div>
+  );
+}
+
+/* ─── subcomponentes ─────────────────────────────────── */
+function SectionHeader({ index, title }: { index: string; title: string }) {
+  return (
+    <div className="mb-5 flex items-center gap-3">
+      <span className="text-[11px] font-black tabular-nums text-[#00e896]/60">{index}</span>
+      <div className="h-px flex-1 bg-[#1e2a38]" />
+      <span className="text-xs font-bold uppercase tracking-widest text-[#667b96]">{title}</span>
+    </div>
+  );
+}
+
+function LinkButton({
+  href,
+  label,
+  variant,
+}: {
+  href: string;
+  label: string;
+  variant: "site" | "platform" | "lesson";
+}) {
+  const styles = {
+    site: "border-[#1e2a38] bg-[#0c1118] text-[#b0bfcf] hover:border-[#00e896]/40 hover:text-[#00e896]",
+    platform: "border-[#1e2a38] bg-[#0c1118] text-[#b0bfcf] hover:border-[#00e896]/40 hover:text-[#00e896]",
+    lesson: "border-[#1a2e3f] bg-[#0d1e2e] text-[#5b9dc4] hover:border-[#5b9dc4]/60 hover:text-[#8dc8e8]",
+  };
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition ${styles[variant]}`}
+    >
+      {variant === "lesson" && (
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="5,3 19,12 5,21" />
+        </svg>
+      )}
+      {(variant === "site" || variant === "platform") && (
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+          <polyline points="15,3 21,3 21,9" />
+          <line x1="10" y1="14" x2="21" y2="3" />
+        </svg>
+      )}
+      {label}
+    </a>
   );
 }
