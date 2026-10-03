@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 /* ─── tipos ─────────────────────────────────────────── */
 interface LinkItem {
@@ -92,20 +92,81 @@ const MATERIAIS: MaterialCard[] = [
   },
 ];
 
+/* tempo estimado de leitura (palavras / 200 wpm) */
+const WORD_COUNT = 520;
+const READ_MIN = Math.ceil(WORD_COUNT / 200);
+
 /* ─── componente principal ───────────────────────────── */
 export default function PlaybookMariana() {
   const [checked, setChecked] = useState<boolean[]>(Array(CHECKLIST.length).fill(false));
+  const [progress, setProgress] = useState(0);
+  const [readingSeconds, setReadingSeconds] = useState(0);
 
   const toggle = (i: number) =>
     setChecked((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
 
   const done = checked.filter(Boolean).length;
 
+  /* barra de progresso de scroll */
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? Math.round((scrollTop / docHeight) * 100) : 0;
+      setProgress(pct);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /* timer de leitura (conta apenas quando progresso > 0) */
+  useEffect(() => {
+    if (progress === 0) return;
+    const id = setInterval(() => setReadingSeconds((s) => s + 1), 1000);
+    return () => clearInterval(id);
+  }, [progress > 0]);
+
+  const formatTime = (s: number) => {
+    if (s < 60) return `${s}s`;
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return r > 0 ? `${m}m ${r}s` : `${m}m`;
+  };
+
   return (
     <div className="min-h-screen bg-[#0c1118] text-[#dde4ef]" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
-      {/* ── TOPO ── */}
-      <header className="border-b border-[#1e2a38] px-6 py-4">
+      {/* ── BARRA DE PROGRESSO FIXA NO TOPO ── */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        {/* trilho */}
+        <div className="h-[3px] w-full bg-[#1e2a38]">
+          <div
+            className="h-full bg-[#00e896] transition-all duration-100"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        {/* indicadores */}
+        <div className="flex items-center justify-between bg-[#0c1118]/90 px-5 py-2 backdrop-blur-sm border-b border-[#1e2a38]">
+          <div className="flex items-center gap-3 text-xs">
+            <span className="font-bold text-[#667b96]">Estimado:</span>
+            <span className="font-semibold text-[#dde4ef]">{READ_MIN} min</span>
+            {readingSeconds > 0 && (
+              <>
+                <span className="text-[#1e2a38]">·</span>
+                <span className="font-bold text-[#667b96]">Lendo há</span>
+                <span className="font-semibold text-[#00e896]">{formatTime(readingSeconds)}</span>
+              </>
+            )}
+          </div>
+          <div className="flex items-center gap-2 text-xs">
+            <span className="font-bold tabular-nums text-[#00e896]">{progress}%</span>
+            <span className="text-[#667b96]">lido</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ── TOPO (com padding-top para compensar a barra fixa) ── */}
+      <header className="border-b border-[#1e2a38] px-6 py-4 pt-[60px]">
         <div className="mx-auto flex max-w-2xl items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#667b96]">
             Mentoria de Concursos
@@ -186,7 +247,6 @@ export default function PlaybookMariana() {
               <strong className="text-[#b0bfcf]">Técnico Judiciário — Área Administrativa (TJAA)</strong>.{" "}
               <span className="text-[#00e896]">Sugestão: inicie pelo ciclo TJAA nos próximos 3 meses</span> — é mais curto e aproveitável para seu momento atual.
             </p>
-
             <div className="space-y-4">
               <div>
                 <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#667b96]">Ciclo AJAA</p>
@@ -217,7 +277,6 @@ export default function PlaybookMariana() {
                 {done}/{CHECKLIST.length}
               </span>
             </div>
-
             <ul className="space-y-3">
               {CHECKLIST.map((item, i) => (
                 <li key={i}>
@@ -307,15 +366,12 @@ export default function PlaybookMariana() {
                     Prof. {mat.professor}
                   </span>
                 </div>
-
                 <p className="mb-4 text-sm leading-relaxed text-[#8a95a8]">{mat.description}</p>
-
                 {mat.book && (
                   <p className="mb-3 text-xs text-[#667b96]">
                     <span className="font-semibold text-[#b0bfcf]">Livro:</span> {mat.book}
                   </p>
                 )}
-
                 <div className="flex flex-wrap gap-2">
                   {mat.site && (
                     <LinkButton href={mat.site.href} label={mat.site.label} variant="site" />
